@@ -1,6 +1,9 @@
 # STOMP.js
 
 ![NodeJS Test](https://github.com/newdash/stompjs/workflows/NodeJS%20Test/badge.svg)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=newdash_stompjs&metric=alert_status)](https://sonarcloud.io/dashboard?id=newdash_stompjs)
+[![codecov](https://codecov.io/gh/newdash/stompjs/branch/develop/graph/badge.svg)](https://codecov.io/gh/newdash/stompjs)
+
 
 This library provides a STOMP over WebSocket client for Web browser or node.js.
 applications.

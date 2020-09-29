@@ -2,9 +2,6 @@
 import "jest"
 import { createStompClient } from "../src";
 import * as uuid from "uuid"
-import { w3cwebsocket } from "websocket";
-
-Object.assign(global, { WebSocket: w3cwebsocket });
 
 if (process.env.TEST_BROKER_URL === undefined) {
     describe = describe.skip
