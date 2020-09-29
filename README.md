@@ -1,6 +1,6 @@
 # STOMP.js
 
-[![Build Status](https://travis-ci.org/stomp-js/stompjs.svg?branch=master)](https://travis-ci.org/stomp-js/stompjs)
+![NodeJS Test](https://github.com/newdash/stompjs/workflows/NodeJS%20Test/badge.svg)
 
 This library provides a STOMP over WebSocket client for Web browser or node.js.
 applications.
