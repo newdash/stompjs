@@ -41,11 +41,12 @@ jobs:
           - 61613:61613
     steps:
       - uses: actions/checkout@v2
-      - run: bin/setup-rabbit.sh
+
       - name: Use Node.js
         uses: actions/setup-node@v1
         with:
           node-version: '12.x'
+      
       - run: npm ci
       
       - run: npm run build
