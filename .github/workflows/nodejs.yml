@@ -7,11 +7,8 @@ name: NodeJS Test
 on: [push, pull_request]
 
 jobs:
-  build:
-    # The type of runner that the job will run on
+  rabbitmq:
     runs-on: ubuntu-latest
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       - uses: actions/checkout@v2
       - run: bin/setup-rabbit.sh
@@ -34,3 +31,29 @@ jobs:
         uses: codecov/codecov-action@v1.0.7
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
+
+  activemq:
+    runs-on: ubuntu-latest
+    services:
+      activemq:
+        image: thedockerimages/activemq
+        ports:
+          - 61613:61613
+    steps:
+      - uses: actions/checkout@v2
+      - run: bin/setup-rabbit.sh
+      - name: Use Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: '12.x'
+      - run: npm ci
+      
+      - run: npm run build
+
+      - name: run test
+        run: npm run jest
+        env: 
+          TEST_BROKER_URL: 'ws://127.0.0.1:61613'
+          TEST_BROKER_LOGIN: 'admin'
+          TEST_BROKER_PASSCODE: 'nimda'
+      
