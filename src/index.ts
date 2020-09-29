@@ -13,3 +13,5 @@ export * from './versions';
 // Compatibility code
 export * from './compatibility/compat-client';
 export * from './compatibility/stomp';
+
+export * from "./node"

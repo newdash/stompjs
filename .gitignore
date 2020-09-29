@@ -10,3 +10,4 @@ tmp
 lib
 .env
 bundles
+coverage

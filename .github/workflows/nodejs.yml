@@ -1,0 +1,36 @@
+# This is a basic workflow that is manually triggered
+
+name: NodeJS Test
+
+# Controls when the action will run. Workflow runs when manually triggered using the UI
+# or API.
+on: [push, pull_request]
+
+jobs:
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      - uses: actions/checkout@v2
+      - run: bin/setup-rabbit.sh
+      - name: Use Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: '12.x'
+      - run: npm ci
+      
+      - run: npm run build
+
+      - name: run test
+        run: npm run jest -- --coverage
+        env: 
+          TEST_BROKER_URL: 'ws://vm1.local:15674/ws'
+          TEST_BROKER_LOGIN: 'guest'
+          TEST_BROKER_PASSCODE: 'guest'
+
+      - name: update code coverage
+        uses: codecov/codecov-action@v1.0.7
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}

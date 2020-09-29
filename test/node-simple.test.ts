@@ -1,5 +1,6 @@
 // @ts-nocheck
-import { Client } from "../src";
+import "jest"
+import { createStompClient } from "../src";
 import * as uuid from "uuid"
 import { w3cwebsocket } from "websocket";
 
@@ -14,28 +15,27 @@ describe('Node Simple MQ Test Suite', () => {
     it('should support push item to queue', async (done) => {
         const destination = `/queue/${uuid.v4()}`
         const testValue = uuid.v4()
-        const client = new Client({
+        const client = await createStompClient({
             brokerURL: process.env.TEST_BROKER_URL,
-            connectHeaders: {
-                login: 'admin',
-                passcode: 'nimda',
-                debug: console.log
-            },
-            onConnect: () => {
-                client.subscribe(destination, (m) => {
-                    expect(m.body).toBe(testValue)
-                    client.deactivate()
-                    done()
-                })
-                client.publish({ destination, body: testValue })
-            },
-            onStompError: done
+            login: process.env.TEST_BROKER_LOGIN,
+            passcode: process.env.TEST_BROKER_PASSCODE,
         })
 
-        await client.activate()
+        client.subscribe(destination, (m) => {
+            expect(m.body).toBe(testValue)
+            client.deactivate()
+            done()
+        })
 
+        client.publish({ destination, body: testValue })
 
+    });
 
+    it('should raise error on ws error', async () => {
+        const notExistService = 'ws://127.0.0.2:33/ws'
+        await expect(
+            () => createStompClient({ brokerURL: notExistService })
+        ).rejects.toThrow(`First connect to ${notExistService} failed.`)
     });
 
 });

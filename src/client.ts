@@ -352,9 +352,9 @@ export class Client {
    *
    * Call [Client#deactivate]{@link Client#deactivate} to disconnect and stop reconnection attempts.
    */
-  public async activate(): Promise<void> {
+  public activate(): void {
     this._active = true;
-    return this._connect();
+    this._connect();
   }
 
   private async _connect(): Promise<void> {
