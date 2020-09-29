@@ -1,13 +1,14 @@
 {
-  "name": "@stomp/stompjs",
+  "name": "@newdash/stompjs",
   "version": "6.0.0-beta1",
-  "description": "STOMP client for Javascript and Typescript",
+  "description": "WS STOMP client",
   "scripts": {
-    "clean": "rm -rf bundles esm6",
-    "build-tsc": "tsc -t es2017 -m es6 --outDir esm6",
+    "prebuild": "rimraf lib",
+    "build-tsc": "tsc",
     "build-webpack": "webpack && webpack --mode=production --output-filename=stomp.umd.min.js",
-    "build": "npm run clean && npm run build-tsc && npm run build-webpack",
+    "build": "npm run build-tsc && npm run build-webpack",
     "test": "jasmine",
+    "jest": "jest --detectOpenHandles --passWithNoTests",
     "karma": "karma start --single-run",
     "lint": "tslint 'src/**/*.ts'",
     "prettier": "prettier --write .",
@@ -15,7 +16,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/stomp-js/stompjs.git"
+    "url": "git+https://github.com/newdash/stompjs.git"
   },
   "keywords": [
     "STOMP",
@@ -26,16 +27,20 @@
     "queue",
     "SockJS"
   ],
-  "author": "deepak@kreatio.com",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/stomp-js/stompjs/issues"
+    "url": "https://github.com/newdash/stompjs/issues"
   },
-  "homepage": "https://github.com/stomp-js/stompjs#readme",
+  "homepage": "https://github.com/newdash/stompjs#readme",
   "devDependencies": {
     "@chiragrupani/karma-chromium-edge-launcher": "^2.0.0",
+    "@types/jest": "^26.0.14",
+    "@types/uuid": "^8.3.0",
+    "@types/websocket": "^1.0.1",
+    "@types/ws": "^7.2.7",
     "awesome-typescript-loader": "^5.2.0",
     "jasmine": "^3.1.0",
+    "jest": "^26.4.2",
     "karma": "^5.0.3",
     "karma-chrome-launcher": "^3.0.0",
     "karma-firefox-launcher": "^1.3.0",
@@ -43,17 +48,21 @@
     "karma-safari-launcher": "git://github.com/RLovelett/karma-safari-launcher.git#safari-webdriver",
     "karma-summary-reporter": "^1.5.0",
     "prettier": "^2.1.2",
+    "rimraf": "^3.0.2",
     "text-encoding": "^0.7.0",
+    "ts-jest": "^26.4.0",
+    "ts-node": "^9.0.0",
     "tslint": "^6.0.0",
     "tslint-config-prettier": "^1.18.0",
-    "typescript": "=3.6.4",
+    "typescript": "^4.0.3",
+    "uuid": "^8.3.0",
     "webpack": "^4.33.0",
-    "webpack-cli": "^3.3.2",
-    "websocket": "^1.0.26"
+    "webpack-cli": "^3.3.2"
   },
-  "module": "./esm6/index.js",
-  "main": "bundles/stomp.umd.js",
+  "main": "lib",
   "typings": "index.d.ts",
   "sideEffects": false,
-  "dependencies": {}
+  "dependencies": {
+    "websocket": "^1.0.32"
+  }
 }

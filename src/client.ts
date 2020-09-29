@@ -17,7 +17,7 @@ import { Versions } from './versions';
 
 declare const WebSocket: {
   prototype: IStompSocket;
-  new (url: string, protocols?: string | string[]): IStompSocket;
+  new(url: string, protocols?: string | string[]): IStompSocket;
 };
 
 /**
@@ -316,7 +316,7 @@ export class Client {
    */
   constructor(conf: StompConfig = {}) {
     // Dummy callbacks
-    const noOp = () => {};
+    const noOp = () => { };
     this.debug = noOp;
     this.beforeConnect = noOp;
     this.onConnect = noOp;
@@ -352,10 +352,9 @@ export class Client {
    *
    * Call [Client#deactivate]{@link Client#deactivate} to disconnect and stop reconnection attempts.
    */
-  public activate(): void {
+  public async activate(): Promise<void> {
     this._active = true;
-
-    this._connect();
+    return this._connect();
   }
 
   private async _connect(): Promise<void> {
